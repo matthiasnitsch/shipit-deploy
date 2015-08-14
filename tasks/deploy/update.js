@@ -116,7 +116,8 @@ module.exports = function (gruntOrShipit) {
     function setCurrentRevision() {
       shipit.log('Setting current revision and creating revision file.');
 
-      return Date.now().then(function(response) {
+      var timestamp = Date.now();
+      return function(timestamp) {
         shipit.currentRevision = response.stdout.trim();
         return shipit.remote('echo "' + shipit.currentRevision + '" > ' + path.join(shipit.releasePath, 'REVISION'));
       }).then(function() {
